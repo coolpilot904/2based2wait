@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 // =======
 // Imports
@@ -249,11 +249,13 @@ function createLocalServer() {
 		function createBridge() {
 			console.log("Creating packet bridge");
 			logger.log("proxy", "Creating packet bridge.", "proxy");
+			webserver.updateWebStatus('updateController', status.controller);
 			// Start Mineflayer when disconnected
 			bridgeClient.on("end", () => {
 				// Log disconnect
 				logSpam(bridgeClient.username + " (" + bridgeClient.uuid + ")" + " has disconnected from the local server.");
 				updateStatus("controller", "None");
+				webserver.updateWebStatus('updateController', status.controller);
 				if (config.notify.whenControlling) { // optional: send message to status webhook
 					notifier.sendWebhook({
 						title: bridgeClient.username + " is no longer using the proxy.",
